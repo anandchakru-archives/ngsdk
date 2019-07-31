@@ -1,0 +1,42 @@
+@import url(https://fonts.googleapis.com/css?family=Roboto);
+@import "../variables";
+@import "~bootstrap/scss/bootstrap.scss";
+@import "../bootswatch";
+@import '../anim.scss';
+
+.navbar {
+  @include animation('pulldown 1s 1');
+}
+
+@media (max-width: 575.98px) {
+
+  //Manage Display Headers for Mobile Devices
+  .display-1 {
+    font-size: 3rem;
+    font-weight: 300;
+    line-height: 1.0;
+  }
+
+  .display-2 {
+    font-size: 2.75rem;
+    font-weight: 300;
+    line-height: 1.0;
+  }
+
+  .display-3 {
+    font-size: 2.25rem;
+    font-weight: 300;
+    line-height: 1.0;
+  }
+
+  .display-4 {
+    font-size: 1.75rem;
+    font-weight: 300;
+    line-height: 1.0;
+  }
+}
+
+/* thin progress bar [default: 1rem (16px)] */
+.progress {
+  height: 0.25rem;
+}

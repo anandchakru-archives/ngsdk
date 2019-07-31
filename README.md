@@ -1,27 +1,30 @@
 # Ngsdk
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.0.1.
+Sample url: http://localhost:4300/?iid=GHB5vMBfOgzuyC6Xo3hS&guestfid=host
 
-## Development server
+```sh
+npm i @types/jquery firebase @angular/fire angularfire2 moment moment-timezone popper.js jquery bootstrap ngx-markdown
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+ng new ngsdk --style scss --prefix n3 --routing=false --create-application=false
+cd ngsdk
+ng g application ngsdk-app --style scss --prefix n3 --routing=false
+ng g library ngsdk-lib --prefix n3
+ng g component components/nav --project=ngsdk-lib --style scss
+ng g component components/rsvp --project=ngsdk-lib --style scss
+ng g class util/nivite3Model --project=ngsdk-lib
 
-## Code scaffolding
+# ng g component components/terms --project=ngsdk-lib --style scss
+# ng g component components/privacy --project=ngsdk-lib --style scss
+# ng g component components/contactus --project=ngsdk-lib --style scss
+# ng g component components/unsubscribe --project=ngsdk-lib --style scss
+# ng g component components/styles --project=ngsdk-lib --style scss
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+#services
+ng g service services/util --project=ngsdk-lib
 
-## Build
+#build library with watch flag
+ng build ngsdk-lib --watch
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+#build app
+ng serve ngsdk-app --port 4300
+```

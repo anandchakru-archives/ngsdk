@@ -17,6 +17,14 @@
     "lib": [
       "es2018",
       "dom"
-    ]
+    ],
+    "paths": {
+      "ngsdk-lib": [
+        "dist/ngsdk-lib"
+      ],
+      "ngsdk-lib/*": [
+        "dist/ngsdk-lib/*"
+      ]
+    }
   }
 }

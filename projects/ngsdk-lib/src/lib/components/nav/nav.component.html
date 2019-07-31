@@ -1,0 +1,50 @@
+<ng-container *ngIf="util.authLoaded">
+  <!-- header -->
+  <nav class="nivite navbar navbar-expand-md navbar-dark bg-dark fixed-top mb-5">
+    <a class="navbar-brand" routerLink="/" (click)="util.toggleNav(); true">Nivite
+      <i class="fas fa-glass-cheers px-1"></i>
+    </a>
+    <button class="navbar-toggler" type="button" (click)="util.toggleNav()" aria-label="Toggle navigation" #toggler>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="navbar-collapse" [class.collapse]="util.collapsed">
+      <div class="navbar-nav mr-auto">
+        <a class="nav-item nav-link" href="https://nivite.jrvite.com/ws/editor" (click)="util.toggleNav(); true"
+          target="_blank" rel="noopener noreferrer">New invite</a>
+      </div>
+      <div class="navbar-nav mr-auto" *ngIf="util.user">
+        <a class="nav-item nav-link" href="https://nivite.jrvite.com/ws/invites/list" (click)="util.toggleNav(); true"
+          target="_blank" rel="noopener noreferrer">My invites</a>
+      </div>
+      <div class="navbar-nav">
+        <ng-container *ngIf="util.user; else noauth">
+          <a class="nav-item nav-link">
+            <span>{{util.user?.email}}</span>
+          </a>
+          <a class="nav-item nav-link pointer" (click)="util.toggleNav(); util.logout(); false;">Logout</a>
+        </ng-container>
+        <ng-template #noauth>
+          <a class="nav-item nav-link pointer" (click)="util.toggleNav(); util.google(); false;">
+            <span>Login</span>
+          </a>
+        </ng-template>
+      </div>
+    </div>
+  </nav>
+  <!-- footer -->
+  <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+    <ng-container *ngIf="util.user; else noauth2">
+      <a class="nav-item nav-link btn btn-secondary pointer" (click)="util.showRsvpModal()"> RSVP
+        <span class="sr-only">RSVP</span>
+      </a>
+    </ng-container>
+    <ng-template #noauth2>
+      <a class="nav-item nav-link btn btn-secondary pointer" (click)="util.toggleNav(); util.google(); false;">
+        <span>Login & RSVP</span>
+      </a>
+    </ng-template>
+  </nav>
+</ng-container>
+<ng-template #loading>
+  loading.
+</ng-template>
