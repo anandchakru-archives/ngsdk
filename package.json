@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "ng serve --port 4500",
+    "start:app": "ng serve ngsdk-app --port 4500",
+    "start:lib": "ng build ngsdk-lib --watch",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
@@ -20,7 +22,6 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
-    "@fortawesome/fontawesome-free": "^5.10.0",
     "@types/file-saver": "^2.0.1",
     "@types/gapi": "0.0.39",
     "@types/gapi.client": "^1.0.1",

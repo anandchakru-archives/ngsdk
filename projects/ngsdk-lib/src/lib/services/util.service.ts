@@ -106,9 +106,13 @@ export class UtilService {
     }
   }
   saveRsvp(guest: Guest, cb: () => void) {
-    this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).update(guest).catch((error) => {
-      this.clog.log(error);
-    }).finally(cb);
+    this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).update(guest)
+      .then(() => {
+        this.showModalSub.next({ id: 'rsvp', show: false });
+      })
+      .catch((error) => {
+        this.clog.log(error);
+      }).finally(cb);
   }
   check(): Observable<firebase.User> {
     return this.userSub.asObservable();
@@ -127,6 +131,9 @@ export class UtilService {
   }
   showModal(id: 'rsvp' | 'atc') {
     this.showModalSub.next({ id, show: true });
+  }
+  isHost(): boolean {
+    return this.guest && (this.guest.role === 'HOST' || this.guest.role === 'COLLAB');
   }
   private listenGuest() {
     this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).snapshotChanges()

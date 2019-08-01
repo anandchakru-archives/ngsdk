@@ -1,0 +1,44 @@
+<!-- Start: Calendar Modal -->
+<div class="modal fade" #atcModal tabindex="-1" role="dialog" aria-labelledby="niviteCalendarModalTitle"
+  (click)="hideAtcModal($event)" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="niviteCalendarModalTitle">Select Calendar</h5>
+        <button type="button" class="close" (click)="hideAtcModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col">
+            <button class="btn text-white w-100 bg-apple" (click)="hideAtcModal(); atc.apple()">
+              <span>Apple</span>
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn text-white w-100 bg-google" (click)="hideAtcModal(); atc.google()">
+              <span>Google</span>
+            </button>
+          </div>
+        </div>
+        <div class="row my-3">
+          <div class="col">
+            <button class="btn text-white w-100 bg-microsoft" (click)="hideAtcModal(); atc.microsoft()">
+              <span>Microsoft</span>
+            </button>
+          </div>
+          <div class="col">
+            <button class="btn text-white w-100 bg-yahoo" (click)="hideAtcModal(); atc.yahoo()">
+              <span>Yahoo</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary bg-white text-dark" (click)="hideAtcModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End: Calendar Modal -->

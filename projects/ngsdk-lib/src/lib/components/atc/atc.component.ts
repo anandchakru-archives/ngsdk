@@ -4,12 +4,12 @@ import { AddToCalendarService } from '../../services/add-to-calendar.service';
 import { ModalMsg } from '../../util/nivite3-model';
 
 @Component({
-  selector: 'n3-add-to-calendar',
-  templateUrl: './add-to-calendar.component.html',
-  styleUrls: ['./add-to-calendar.component.scss']
+  selector: 'n3-atc',
+  templateUrl: './atc.component.html',
+  styleUrls: ['./atc.component.scss']
 })
-export class AddToCalendarComponent implements OnInit {
-  @ViewChild('addToCalendarModal', { static: false }) addToCalendarModal: ElementRef;
+export class AtcComponent implements OnInit {
+  @ViewChild('atcModal', { static: false }) atcModal: ElementRef;
 
   constructor(private renderer: Renderer2, private util: UtilService, public atc: AddToCalendarService) {
     this.util.showModalSub.subscribe((modalMsg: ModalMsg) => {
@@ -34,12 +34,12 @@ export class AddToCalendarComponent implements OnInit {
 
   hideAtcModal(event?: Event) {
     if (!event || (event.target as Element).classList.contains('modal')) {
-      this.renderer.setStyle(this.addToCalendarModal.nativeElement, 'display', 'none');
-      this.renderer.removeClass(this.addToCalendarModal.nativeElement, 'show');
+      this.renderer.setStyle(this.atcModal.nativeElement, 'display', 'none');
+      this.renderer.removeClass(this.atcModal.nativeElement, 'show');
     }
   }
   showAtcModal() {
-    this.renderer.setStyle(this.addToCalendarModal.nativeElement, 'display', 'block');
-    this.renderer.addClass(this.addToCalendarModal.nativeElement, 'show');
+    this.renderer.setStyle(this.atcModal.nativeElement, 'display', 'block');
+    this.renderer.addClass(this.atcModal.nativeElement, 'show');
   }
 }

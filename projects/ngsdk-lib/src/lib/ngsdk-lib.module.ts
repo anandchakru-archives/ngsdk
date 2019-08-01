@@ -8,7 +8,7 @@ import { AngularFireAuthModule } from '@angular/fire/auth';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ClogComponent } from './components/clog/clog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { AddToCalendarComponent } from './components/add-to-calendar/add-to-calendar.component';
+import { AtcComponent } from './components/atc/atc.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +16,7 @@ import { AddToCalendarComponent } from './components/add-to-calendar/add-to-cale
     NavComponent,
     RsvpComponent,
     ClogComponent,
-    AddToCalendarComponent
+    AtcComponent
   ],
   imports: [
     BrowserModule,

@@ -12,6 +12,7 @@ ng g library ngsdk-lib --prefix n3
 ng g component components/nav --project=ngsdk-lib --style scss
 ng g component components/rsvp --project=ngsdk-lib --style scss
 ng g component components/clog --project=ngsdk-lib --style scss
+ng g component components/atc --project=ngsdk-lib --style scss
 ng g class util/nivite3Model --project=ngsdk-lib
 
 # ng g component components/terms --project=ngsdk-lib --style scss
@@ -23,12 +24,13 @@ ng g class util/nivite3Model --project=ngsdk-lib
 #services
 ng g service services/util --project=ngsdk-lib
 ng g service services/clog --project=ngsdk-lib
+ng g service services/add-to-calendar --project=ngsdk-lib
 
 #build library with watch flag
 ng build ngsdk-lib --watch
 
 #build app
-ng serve ngsdk-app --port 4300
+ng serve ngsdk-app --port 4500
 
 # deploy
 ng build && firebase deploy
