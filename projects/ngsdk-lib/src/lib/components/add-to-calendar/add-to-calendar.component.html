@@ -1,0 +1,38 @@
+<!-- Start: Calendar Modal -->
+<div class="modal fade" #addToCalendarModal tabindex="-1" role="dialog" aria-labelledby="niviteCalendarModalTitle"
+  (click)="hideAtcModal($event)" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="niviteCalendarModalTitle">Select Calendar</h5>
+        <button type="button" class="close" (click)="hideAtcModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="btn-group d-flex">
+          <button class="btn text-white bg-apple" (click)="atc.apple()">
+            <span class="d-inline mr-2"><i class="fab fa-apple"></i></span>
+            <span class="d-sm-inline d-none">Apple</span>
+          </button>
+          <button class="btn text-white bg-google" (click)="atc.google()">
+            <span class="d-inline mr-2"><i class="fab fa-google"></i></span>
+            <span class="d-sm-inline d-none">Google</span>
+          </button>
+          <button class="btn text-white bg-microsoft" (click)="atc.microsoft()">
+            <span class="d-inline mr-2"><i class="fab fa-microsoft"></i></span>
+            <span class="d-sm-inline d-none">Microsoft</span>
+          </button>
+          <button class="btn text-white bg-yahoo" (click)="atc.yahoo()">
+            <span class="d-inline mr-2"><i class="fab fa-yahoo"></i></span>
+            <span class="d-sm-inline d-none">Yahoo</span>
+          </button>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary bg-white text-dark" (click)="hideAtcModal()">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End: Calendar Modal -->

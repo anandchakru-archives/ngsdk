@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UtilService } from '../../services/util.service';
+import { ClogService } from '../../services/clog.service';
 
 @Component({
   selector: 'n3-nav',
@@ -8,7 +9,7 @@ import { UtilService } from '../../services/util.service';
 })
 export class NavComponent implements OnInit {
 
-  constructor(public util: UtilService) { }
+  constructor(public util: UtilService, public clog: ClogService) { }
 
   ngOnInit() {
   }

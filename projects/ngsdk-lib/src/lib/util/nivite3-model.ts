@@ -38,14 +38,19 @@ export interface Invite {
   addrText?: string;
   addrUrl?: string;
   addrDetails?: string;
-  defaultYes?: boolean;
-  showGuests?: boolean;
-  autoApproveNewRsvp?: boolean;
-  visibleByLink?: boolean;
+  defaultYes?: boolean;         // No  -  (default) free version, Yes - paid version
+  showGuests?: boolean;         // Yes -  (default) free version, No  - paid version
+  autoApproveNewRsvp?: boolean; // Yes -  (default) free version, No  - paid version
+  visibleByLink?: boolean;      // Yes -  (default) free version, No  - paid version
   photos?: InvitePhoto[];
   guests?: Guest[];
   /* _dateFrom?: Date;
   _dateTo?: Date;
   _timeFrom?: Date;
   _timeTo?: Date; */
+}
+
+export interface ModalMsg {
+  id: 'rsvp' | 'atc';
+  show: boolean;
 }

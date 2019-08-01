@@ -1,0 +1,64 @@
+<!-- Start: Rsvp Modal -->
+<div class="modal fade" #rsvpModal role="dialog" aria-labelledby="niviteRsvpModalTitle" (click)="hideRsvpModal($event)">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="niviteRsvpModalTitle">
+          Respond <strong
+            [ngClass]="isYOrNOrM('Y')?'text-success':isYOrNOrM('N')?'text-danger':isYOrNOrM('M')?'text-warning':''">
+            {{getRsvp()}} {{getUnApproved()}} </strong>
+        </h5>
+        <button type="button" class="close" (click)="hideRsvpModal()" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="fg" *ngIf="fg">
+          <div class="row">
+            <div class="col-sm">
+              <div class="form-group">
+                <label for="niviteRsvpModalFormAdultCount">Adults</label>
+                <input type="number" class="form-control" id="niviteRsvpModalFormAdultCount" formControlName="ac"
+                  aria-describedby="Number of adults">
+                <small class="form-text text-muted">Number of adults</small>
+              </div>
+            </div>
+            <div class="col-sm">
+              <div class="form-group">
+                <label for="niviteRsvpModalFormKidCount">Kids</label>
+                <input type="number" class="form-control" id="niviteRsvpModalFormKidCount" formControlName="kc"
+                  aria-describedby="Number of kids">
+                <small class="form-text text-muted">Number of kids (~12 years old)</small>
+              </div>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="niviteRsvpModalFormLongMsg">Message</label>
+            <textarea type="number" class="form-control" id="niviteRsvpModalFormLongMsg" formControlName="longMsg"
+              aria-describedby="Optional message to the host" rows="3"></textarea>
+            <small class="form-text text-muted">Optional message to the host</small>
+          </div>
+          <div class="btn-group d-flex">
+            <button type="button" class="btn btn-success" (click)="saveRsvp('Y')" [disabled]="savingrsvp">
+              <span class="d-inline mr-2"><i class="fas fa-check"></i></span>
+              <span class="d-sm-inline d-none">Yes</span>
+            </button>
+            <button type="button" class="btn btn-warning" (click)="saveRsvp('M')" [disabled]="savingrsvp">
+              <span class="d-inline mr-2"><i class="fas fa-question"></i></span>
+              <span class="d-sm-inline d-none">Maybe</span>
+            </button>
+            <button type="button" class="btn btn-danger" (click)="saveRsvp('N')" [disabled]="savingrsvp">
+              <span class="d-inline mr-2"><i class="fas fa-times"></i></span>
+              <span class="d-sm-inline d-none">No</span>
+            </button>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" (click)="resetRsvpForm()">Reset</button>
+        <button type="button" class="btn btn-secondary" (click)="hideRsvpModal()">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End: Rsvp Modal-->

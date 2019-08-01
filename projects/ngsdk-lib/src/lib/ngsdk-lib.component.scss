@@ -4,10 +4,6 @@
 @import "../bootswatch";
 @import '../anim.scss';
 
-.navbar {
-  @include animation('pulldown 1s 1');
-}
-
 @media (max-width: 575.98px) {
 
   //Manage Display Headers for Mobile Devices

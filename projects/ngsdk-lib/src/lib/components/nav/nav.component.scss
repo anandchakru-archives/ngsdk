@@ -1,1 +1,9 @@
 @import "../../ngsdk-lib.component.scss";
+
+.slidedown {
+  @include animation('slidedown 1s 1');
+}
+
+.slideup {
+  @include animation('slideup 1s 1');
+}

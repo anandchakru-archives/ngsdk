@@ -1,6 +1,6 @@
 <ng-container *ngIf="util.authLoaded">
   <!-- header -->
-  <nav class="nivite navbar navbar-expand-md navbar-dark bg-dark fixed-top mb-5">
+  <nav class="slidedown navbar navbar-expand-md navbar-dark bg-dark fixed-top mb-5">
     <a class="navbar-brand" routerLink="/" (click)="util.toggleNav(); true">Nivite
       <i class="fas fa-glass-cheers px-1"></i>
     </a>
@@ -32,17 +32,23 @@
     </div>
   </nav>
   <!-- footer -->
-  <nav class="navbar fixed-bottom navbar-light bg-light justify-content-center">
+  <nav class="slideup navbar fixed-bottom navbar-light bg-light justify-content-center">
     <ng-container *ngIf="util.user; else noauth2">
-      <a class="nav-item nav-link btn btn-secondary pointer" (click)="util.showRsvpModal()"> RSVP
-        <span class="sr-only">RSVP</span>
-      </a>
+      <div class="btn-group">
+        <a class="nav-item nav-link btn btn-secondary pointer" (click)="util.showModal('rsvp')"> RSVP
+          <span class="sr-only">RSVP</span>
+        </a>
+        <a class="nav-item nav-link btn btn-secondary pointer" (click)="util.showModal('atc')"> Calendar
+          <span class="sr-only">Add to calendar</span>
+        </a>
+      </div>
     </ng-container>
     <ng-template #noauth2>
       <a class="nav-item nav-link btn btn-secondary pointer" (click)="util.toggleNav(); util.google(); false;">
         <span>Login & RSVP</span>
       </a>
     </ng-template>
+    <a (click)="clog.toggle(); false;" class="nav-item nav-link text-light pointer">&gt;_</a>
   </nav>
 </ng-container>
 <ng-template #loading>

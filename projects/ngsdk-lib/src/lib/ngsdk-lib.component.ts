@@ -1,9 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
 import { UtilService } from './services/util.service';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, take, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { Invite, Guest } from './util/nivite3-model';
 import { Title } from '@angular/platform-browser';
+import { ClogService } from './services/clog.service';
 
 @Component({
   selector: 'n3-ngsdk-lib',
@@ -16,22 +17,27 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
   @Output() invite = new EventEmitter<Invite>();
   @Output() login = new EventEmitter<firebase.User>();
   @Output() guest = new EventEmitter<Guest>();
-  constructor(private util: UtilService, private title: Title) {
+  constructor(private util: UtilService, private title: Title, private clog: ClogService) {
     title.setTitle('Nivite - Loading');
-    this.util.userSub.pipe(takeUntil(this.uns)).subscribe((user: firebase.User) => {
-      this.login.emit(user);
+    this.util.userSub.pipe(take(1)).subscribe((user: firebase.User) => {  // One time - invitalize firestore config
+      this.util.initializeFirestore(this.fireconfig);
+      this.util.setupInvite();
     });
-    this.util.inviteSub.pipe(takeUntil(this.uns)).subscribe((invite: Invite) => {
-      this.invite.emit(invite);
-      title.setTitle('Nivite - ' + invite ? invite.hostName : ' Oops!');
-    });
-    this.util.guestSub.pipe(takeUntil(this.uns)).subscribe((guest: Guest) => {
+    this.util.guestSub.pipe(takeUntil(this.uns)).subscribe((guest: Guest) => { // On everytime guest is loaded
       this.guest.emit(guest);
+    });
+    this.util.inviteSub.pipe(takeUntil(this.uns)).subscribe((invite: Invite) => { // On everytime invite is loaded
+      this.invite.emit(invite);
+      title.setTitle('Nivite - ' + (invite ? invite.hostName : ' Oops!'));
+    });
+    this.util.userSub.pipe(takeUntil(this.uns)).subscribe((user: firebase.User) => {  // On every login/logout
+      this.util.setupGuest(user);
+      this.login.emit(user);
     });
   }
 
   ngOnInit() {
-    this.util.initializeFirestore(this.fireconfig);
+
   }
   ngOnDestroy() {
     this.uns.next();
