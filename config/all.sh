@@ -7,4 +7,4 @@ if [ -z "$1" ]; then
   else
   commitMsg="$1"
 fi
-git status && git add --all && git status && git commit --message "$commitMsg" && bash "$scriptPath/bumptag.sh" && npm version patch && (cd ../projects/ngsdk-lib; npm version patch) && npm run pub:lib
+git status && git add --all && git status && git commit --message "$commitMsg" && npm version patch && (cd ../projects/ngsdk-lib; npm version patch) && npm run pub:lib
