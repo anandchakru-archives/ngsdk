@@ -1,39 +1,12 @@
 {
-  "name": "ngsdk-lib",
-  "version": "1.0.1",
-  "description": "Angular Library to create online invitations the nerdy way.",
-  "keywords": [
-    "invite",
-    "rsvp",
-    "wedding",
-    "birthday",
-    "graduation",
-    "festival",
-    "diy",
-    "party",
-    "gettogether",
-    "potluck",
-    "celebration",
-    "picnic"
-  ],
-  "license": "MIT",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/nivite/ngsdk"
-  },
-  "homepage": "https://nivite.jrvite.com",
-  "author": "Anand Rockzz",
-  "bugs": {
-    "url": "https://github.com/nivite/ngsdk/issues"
-  },
+  "name": "@nivite/ngsdk",
+  "version": "1.0.7",
+  "private": false,
   "publishConfig": {
     "access": "public"
   },
-  "peerDependencies": {
-    "@angular/common": "^8.0.3",
-    "@angular/core": "^8.0.3",
+  "dependencies": {
     "@angular/fire": "^5.2.1",
-    "@angular/forms": "~8.0.0",
     "angularfire2": "^5.2.1",
     "bootstrap": "^4.3.1",
     "file-saver": "^2.0.2",
@@ -41,6 +14,11 @@
     "moment": "^2.24.0",
     "moment-timezone": "^0.5.26",
     "ngx-markdown": "^8.1.0"
+  },
+  "peerDependencies": {
+    "@angular/common": "^8.0.3",
+    "@angular/core": "^8.0.3",
+    "@angular/forms": "~8.0.0"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.1",

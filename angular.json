@@ -28,7 +28,6 @@
               "projects/ngsdk-app/src/assets"
             ],
             "styles": [
-              "projects/ngsdk-lib/src/styles.scss",
               "projects/ngsdk-app/src/styles.scss"
             ],
             "scripts": []

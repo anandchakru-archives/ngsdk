@@ -36,3 +36,15 @@
 .progress {
   height: 0.25rem;
 }
+
+/* Custom styles - global */
+.pointer {
+  cursor: pointer;
+}
+
+.text-noselect {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

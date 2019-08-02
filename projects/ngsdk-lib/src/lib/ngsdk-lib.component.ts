@@ -1,4 +1,4 @@
-import { Component, OnInit, Output, EventEmitter, OnDestroy, Input } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, Renderer2 } from '@angular/core';
 import { UtilService } from './services/util.service';
 import { takeUntil, take, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
@@ -17,7 +17,7 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
   @Output() invite = new EventEmitter<Invite>();
   @Output() login = new EventEmitter<firebase.User>();
   @Output() guest = new EventEmitter<Guest>();
-  constructor(private util: UtilService, private title: Title, private clog: ClogService) {
+  constructor(private util: UtilService, private title: Title, private clog: ClogService, private renderer: Renderer2) {
     title.setTitle('Nivite - Loading');
     this.util.userSub.pipe(take(1)).subscribe((user: firebase.User) => {  // One time - invitalize firestore config
       this.util.initializeFirestore(this.fireconfig);
@@ -37,7 +37,8 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
-
+    this.renderer.setStyle(document.body, 'margin-top', '60px');
+    this.renderer.setStyle(document.body, 'margin-bottom', '60px');
   }
   ngOnDestroy() {
     this.uns.next();

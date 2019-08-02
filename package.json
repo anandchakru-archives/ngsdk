@@ -1,6 +1,31 @@
 {
   "name": "@nivite/ngsdk",
-  "version": "1.0.1",
+  "version": "1.0.7",
+  "description": "Angular Library to create online invitations the nerdy way.",
+  "keywords": [
+    "invite",
+    "rsvp",
+    "wedding",
+    "birthday",
+    "graduation",
+    "festival",
+    "diy",
+    "party",
+    "gettogether",
+    "potluck",
+    "celebration",
+    "picnic"
+  ],
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nivite/ngsdk"
+  },
+  "homepage": "https://nivite.jrvite.com",
+  "author": "Anand Rockzz",
+  "bugs": {
+    "url": "https://github.com/nivite/ngsdk/issues"
+  },
   "scripts": {
     "ng": "ng",
     "start": "npm run start:lib && npm run start:app",
@@ -10,12 +35,16 @@
     "build:app": "ng build",
     "build:lib": "npm run v && ng build ngsdk-lib",
     "pack:lib": "npm run build:lib && cd dist/ngsdk-lib && npm pack",
+    "pub:lib": "npm run pack:lib && npm publish dist/ngsdk-lib/nivite-ngsdk-${npm_package_version}.tgz",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
     "v": "node config/version.js"
   },
   "private": false,
+  "publishConfig": {
+    "access": "public"
+  },
   "dependencies": {
     "@angular/animations": "~8.0.0",
     "@angular/common": "~8.0.0",
