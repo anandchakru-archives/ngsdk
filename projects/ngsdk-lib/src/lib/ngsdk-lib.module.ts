@@ -9,6 +9,7 @@ import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { ClogComponent } from './components/clog/clog.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AtcComponent } from './components/atc/atc.component';
+import { GrowlsComponent } from './components/growls/growls.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { AtcComponent } from './components/atc/atc.component';
     NavComponent,
     RsvpComponent,
     ClogComponent,
-    AtcComponent
+    AtcComponent,
+    GrowlsComponent
   ],
   imports: [
     BrowserModule,

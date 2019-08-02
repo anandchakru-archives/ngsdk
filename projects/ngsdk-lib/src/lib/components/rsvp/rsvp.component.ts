@@ -54,6 +54,9 @@ export class RsvpComponent implements OnInit, OnDestroy {
   }
   saveRsvp(rsvp: 'Y' | 'N' | 'M') {
     this.savingrsvp = true;
+    if (!this.guest) {
+      this.guest = this.util.makeNewGuest();
+    }
     this.guest.rsvp = rsvp;
     this.guest.adultCount = this.fg.get('ac').value;
     this.guest.kidCount = this.fg.get('kc').value;

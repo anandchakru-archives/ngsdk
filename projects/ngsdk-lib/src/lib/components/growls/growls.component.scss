@@ -1,0 +1,51 @@
+.growls {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  overflow: auto;
+  height: 100%;
+  padding: 60px 20px;
+  width: 200px;
+  word-wrap: break-word; // urls overflowing without this
+}
+
+@media (min-width: 576px) {
+  .growls {
+    width: 225px;
+  }
+}
+
+@media (min-width: 768px) {
+  .growls {
+    width: 350px;
+  }
+}
+
+@media (min-width: 992px) {
+  .growls {
+    width: 450px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .growls {
+    width: 600px;
+  }
+}
+
+.progress {
+  height: 2px;
+  margin-top: 5px;
+
+  .progress-bar {
+    transition: width linear 750ms;
+  }
+}
+
+.alert {
+  position: relative;
+  opacity: 0.95;
+  right: 0;
+  left: 0;
+  z-index: 1031;
+}

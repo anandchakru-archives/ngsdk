@@ -1,4 +1,5 @@
 import * as moment from 'moment-timezone';
+import { Subject, Observable } from 'rxjs';
 
 export class Nivite3Model {
 }
@@ -53,4 +54,24 @@ export interface Invite {
 export interface ModalMsg {
   id: 'rsvp' | 'atc';
   show: boolean;
+}
+
+export class Growl {
+  private static COUNTER = 1;
+  constructor(public title: string, public body?: string,
+    public type?: undefined | 'success' | 'info' | 'warning' | 'danger' | 'primary' | 'dark', public after?: () => void
+    , public timeout?: number, public autoclose?: boolean) {
+    if (!type) {
+      this.type = 'success';
+    }
+    if (timeout) {
+      this.autoclose = true;
+    } else {
+      this.timeout = 5 * 60000; // 5 mins
+    }
+  }
+  id = Growl.COUNTER++;
+  percent: number;
+  close = new Subject();
+  counter: Observable<number>;
 }

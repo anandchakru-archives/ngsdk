@@ -13,6 +13,8 @@ ng g component components/nav --project=ngsdk-lib --style scss
 ng g component components/rsvp --project=ngsdk-lib --style scss
 ng g component components/clog --project=ngsdk-lib --style scss
 ng g component components/atc --project=ngsdk-lib --style scss
+ng g component components/growls --project=ngsdk-lib --style scss
+
 ng g class util/nivite3Model --project=ngsdk-lib
 
 # ng g component components/terms --project=ngsdk-lib --style scss

@@ -14,7 +14,7 @@ const tagCmd = spawnSync('git', ['describe', '--exact-match', hash, '--tags']);
 
 const op = { 'hash': { 'short': hashShort.stdout.toString().trim(), 'long': hash }, 'tag': tagCmd.stdout.toString().trim() };
 
-const file = resolve(__dirname, '..', 'projects', 'ngsdk-lib', 'src', 'buildinfo.ts');
+const file = resolve(__dirname, '..', 'projects', 'ngsdk-lib', 'src', 'lib', 'buildinfo.ts');
 
 writeFileSync(file,
   `// IMPORTANT: THIS FILE IS AUTO GENERATED! DO NOT MANUALLY EDIT OR CHECKIN!

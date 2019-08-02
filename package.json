@@ -1,17 +1,21 @@
 {
-  "name": "ngsdk",
-  "version": "0.0.0",
+  "name": "@nivite/ngsdk",
+  "version": "1.0.1",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --port 4500",
-    "start:app": "ng serve ngsdk-app --port 4500",
-    "start:lib": "ng build ngsdk-lib --watch",
-    "build": "ng build",
+    "start": "npm run start:lib && npm run start:app",
+    "start:app": "npm run v && ng serve ngsdk-app --port 4500",
+    "start:lib": "npm run v && ng build ngsdk-lib --watch",
+    "build": "npm run build:lib && npm run build:lib",
+    "build:app": "ng build",
+    "build:lib": "npm run v && ng build ngsdk-lib",
+    "pack:lib": "npm run build:lib && cd dist/ngsdk-lib && npm pack",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "v": "node config/version.js"
   },
-  "private": true,
+  "private": false,
   "dependencies": {
     "@angular/animations": "~8.0.0",
     "@angular/common": "~8.0.0",

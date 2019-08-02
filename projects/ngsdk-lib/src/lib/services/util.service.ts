@@ -4,7 +4,7 @@ import { Injectable, PLATFORM_ID, NgZone } from '@angular/core';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { Subject, ReplaySubject, Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { Invite, Guest, ModalMsg } from '../util/nivite3-model';
+import { Invite, Guest, ModalMsg, Growl } from '../util/nivite3-model';
 import { AngularFirestore, Action, DocumentSnapshot, QuerySnapshot } from '@angular/fire/firestore';
 import { AngularFireStorage } from '@angular/fire/storage';
 import { map } from 'rxjs/operators';
@@ -29,6 +29,8 @@ export class UtilService {
   inviteSub: Subject<Invite> = new Subject();
   guestSub: Subject<Guest> = new Subject();
   showModalSub: Subject<ModalMsg> = new Subject();
+  growlMax = 5;
+  growlSub = new ReplaySubject<Growl>(this.growlMax); // Max 5 growls
   // Hard coding for now, because CORS blocked https://nivite.jrvite.com/__/firebase/init.js
   // Find a way to do this:
   // this.http.get('https://nivite.jrvite.com/__/firebase/init.js').subscribe((rsp) => {
@@ -109,16 +111,18 @@ export class UtilService {
     this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).update(guest)
       .then(() => {
         this.showModalSub.next({ id: 'rsvp', show: false });
-      })
-      .catch((error) => {
+        this.growlSub.next(new Growl('Saved', 'Your response is saved', 'success', () => { }))
+      }).catch((error) => {
         this.clog.log(error);
       }).finally(cb);
   }
   check(): Observable<firebase.User> {
     return this.userSub.asObservable();
   }
-  google() {
-    this.niviteFireAuth.auth.signInWithPopup(this.provider);
+  google(cb: () => void) {
+    this.niviteFireAuth.auth.signInWithPopup(this.provider).then((uc: firebase.auth.UserCredential) => {
+      cb();
+    });
   }
   logout() {
     this.niviteFireAuth.auth.signOut();
@@ -130,7 +134,13 @@ export class UtilService {
     this.collapsed = true;
   }
   showModal(id: 'rsvp' | 'atc') {
-    this.showModalSub.next({ id, show: true });
+    if (this.user) {
+      this.showModalSub.next({ id, show: true });
+    } else if (id === 'rsvp') {
+      this.google(() => {
+        this.showModalSub.next({ id, show: true });
+      });
+    }
   }
   isHost(): boolean {
     return this.guest && (this.guest.role === 'HOST' || this.guest.role === 'COLLAB');
@@ -159,7 +169,7 @@ export class UtilService {
         this.clog.log(error);
       });
   }
-  private makeNewGuest(): Guest {
+  makeNewGuest(): Guest {
     return {
       niviteuid: '',
       name: this.user.displayName,
