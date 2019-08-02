@@ -111,7 +111,7 @@ export class UtilService {
     this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).update(guest)
       .then(() => {
         this.showModalSub.next({ id: 'rsvp', show: false });
-        this.growlSub.next(new Growl('Saved', 'Your response is saved', 'success', () => { }))
+        this.growlSub.next(new Growl('Saved', 'Your response is saved', 'success', () => { }, 60 * 1000, true));
       }).catch((error) => {
         this.clog.log(error);
       }).finally(cb);

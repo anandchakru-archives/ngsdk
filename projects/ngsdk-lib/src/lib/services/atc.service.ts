@@ -11,7 +11,7 @@ const moment = moment_;
 @Injectable({
   providedIn: 'root'
 })
-export class AddToCalendarService {
+export class AtcService {
   readonly FORMAT_WITH_Z = 'YYYYMMDD[T]HHmmss[Z]';
   readonly FORMAT = 'YYYYMMDD[T]HHmmss';
   readonly APPLE_SEPARATOR = '\r\n';

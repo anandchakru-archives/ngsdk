@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { AddToCalendarService } from './add-to-calendar.service';
+import { AtcService } from './atc.service';
 
-describe('AddToCalendarService', () => {
+describe('AtcService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: AddToCalendarService = TestBed.get(AddToCalendarService);
+    const service: AtcService = TestBed.get(AtcService);
     expect(service).toBeTruthy();
   });
 });

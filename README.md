@@ -17,23 +17,24 @@ ng g component components/growls --project=ngsdk-lib --style scss
 
 ng g class util/nivite3Model --project=ngsdk-lib
 
-# ng g component components/terms --project=ngsdk-lib --style scss
-# ng g component components/privacy --project=ngsdk-lib --style scss
-# ng g component components/contactus --project=ngsdk-lib --style scss
-# ng g component components/unsubscribe --project=ngsdk-lib --style scss
-# ng g component components/styles --project=ngsdk-lib --style scss
-
 #services
 ng g service services/util --project=ngsdk-lib
 ng g service services/clog --project=ngsdk-lib
-ng g service services/add-to-calendar --project=ngsdk-lib
+ng g service services/atc --project=ngsdk-lib
+```
 
+#### Local setup
+```sh
 #build library with watch flag
 ng build ngsdk-lib --watch
 
 #build app
 ng serve ngsdk-app --port 4500
+```
 
-# deploy
-ng build && firebase deploy
+#### Publish
+```sh
+
+./config/all.sh "commit message"
+
 ```

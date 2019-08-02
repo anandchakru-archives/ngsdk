@@ -1,11 +1,11 @@
 import { Component, OnInit, ViewChild, ElementRef, HostListener, Renderer2, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, Validators, FormControl, FormArray, AbstractControl, ValidatorFn } from '@angular/forms';
 
-import { AddToCalendarService } from '../../services/add-to-calendar.service';
 import { UtilService } from '../../services/util.service';
 import { Guest, ModalMsg } from '../../util/nivite3-model';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { AtcService } from '../../services/atc.service';
 
 @Component({
   selector: 'n3-rsvp',
@@ -18,7 +18,7 @@ export class RsvpComponent implements OnInit, OnDestroy {
   fg: FormGroup;
   guest: Guest;
   uns = new Subject();
-  constructor(private fb: FormBuilder, public atc: AddToCalendarService, private renderer: Renderer2, private util: UtilService) {
+  constructor(private fb: FormBuilder, public atc: AtcService, private renderer: Renderer2, private util: UtilService) {
     this.util.showModalSub.subscribe((modalMsg: ModalMsg) => {
       if (modalMsg && modalMsg.id === 'rsvp') {
         if (modalMsg.show) {

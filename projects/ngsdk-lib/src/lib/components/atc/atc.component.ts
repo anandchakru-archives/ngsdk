@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, ViewChild, HostListener, Renderer2 } from '@angular/core';
 import { UtilService } from '../../services/util.service';
-import { AddToCalendarService } from '../../services/add-to-calendar.service';
 import { ModalMsg } from '../../util/nivite3-model';
+import { AtcService } from '../../services/atc.service';
 
 @Component({
   selector: 'n3-atc',
@@ -11,7 +11,7 @@ import { ModalMsg } from '../../util/nivite3-model';
 export class AtcComponent implements OnInit {
   @ViewChild('atcModal', { static: false }) atcModal: ElementRef;
 
-  constructor(private renderer: Renderer2, private util: UtilService, public atc: AddToCalendarService) {
+  constructor(private renderer: Renderer2, private util: UtilService, public atc: AtcService) {
     this.util.showModalSub.subscribe((modalMsg: ModalMsg) => {
       if (modalMsg && modalMsg.id === 'atc') {
         if (modalMsg.show) {
