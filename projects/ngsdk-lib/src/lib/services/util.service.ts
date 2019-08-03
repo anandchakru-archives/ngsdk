@@ -74,7 +74,7 @@ export class UtilService {
       hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone);
   }
   setupInvite() {
-    if (!this.inviteId || !this.customerFirestore) {
+    if (!this.inviteId) {
       this.sampleInvite();
       this.sampleGuest();
       this.growlSub.next(new Growl('WARN: No iid in url'
@@ -96,7 +96,7 @@ export class UtilService {
     }
   }
   setupGuest(user: firebase.User) {
-    if (user && this.customerFirestore) { // login, this.customerFirestore - to ensure firebase config is loaded
+    if (user) { // login
       this.customerFirestore.collection('nivites/' + this.inviteId + '/guests', ref => ref.where('email', '==', this.user.email))
         .get().subscribe((guestDocChgAc: QuerySnapshot<Guest>) => {
           this.clog.log(`Find by email: ${this.user.email}, size: ${guestDocChgAc.size}`);
