@@ -1,13 +1,12 @@
 <div class="growls" *ngIf="growls && ids()?.length">
   <div *ngFor="let growl of growls | keyvalue: descOrder">
     <div
-      class="px-0 pb-0 alert fade show alert-dismissible alert-{{growl.value.type}} border border-{{growl.value.type}}"
+      class="px-0 pt-1 pb-0 alert fade show alert-dismissible alert-{{growl.value.type}} border border-{{growl.value.type}}"
       role="alert">
-      <button type="button" class="close mx-1" (click)="close(growl.key)">
+      <button type="button" class="close mx-1 p-1 text-muted" (click)="close(growl.key)">
         <span aria-hidden="true">&times;</span>
       </button>
-      <div class="p-1">{{growl.value.title}}
-      </div>
+      <div class="p-1 text-dark font-weight-bold">{{growl.value.title}} </div>
       <div class="px-1 small text-dark" *ngIf="growl.value.body">{{growl.value.body}}</div>
       <div class="my-2 progress" *ngIf="growl.value.percent">
         <div class="progress-bar bg-{{growl.value.type}}" [style.width.%]="growl.value.percent"></div>

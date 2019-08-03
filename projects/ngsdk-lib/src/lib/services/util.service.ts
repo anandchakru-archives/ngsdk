@@ -76,18 +76,26 @@ export class UtilService {
       hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone);
   }
   setupInvite() {
-    this.customerFirestore.doc<Invite>('nivites/' + this.inviteId).snapshotChanges()
-      .pipe(map((inviteDocSnap: Action<DocumentSnapshot<Invite>>) => {
-        this.invite = inviteDocSnap.payload.data();
-        this.inviteId = inviteDocSnap.payload.id;
-        this.invite.timeFrom = this.ifNumberMoment(this.invite.timeFrom);
-        this.invite.timeTo = this.ifNumberMoment(this.invite.timeTo);
-        return inviteDocSnap;
-      })).subscribe((inviteDocSnap: Action<DocumentSnapshot<Invite>>) => {
-        this.inviteSub.next(inviteDocSnap.payload.data());
-      }, (error) => {
-        this.inviteSub.next(undefined);
-      });
+    if (!this.inviteId) {
+      this.sampleInvite();
+      this.sampleGuest();
+      this.growlSub.next(new Growl('No iid in url'
+        , 'unable to find the invite id (iid) in url. Loading sample data - this is not a real invite.'
+        , 'warning', () => { }, 60 * 1000, true));
+    } else {
+      this.customerFirestore.doc<Invite>('nivites/' + this.inviteId).snapshotChanges()
+        .pipe(map((inviteDocSnap: Action<DocumentSnapshot<Invite>>) => {
+          this.invite = inviteDocSnap.payload.data();
+          this.inviteId = inviteDocSnap.payload.id;
+          this.invite.timeFrom = this.ifNumberMoment(this.invite.timeFrom);
+          this.invite.timeTo = this.ifNumberMoment(this.invite.timeTo);
+          return inviteDocSnap;
+        })).subscribe((inviteDocSnap: Action<DocumentSnapshot<Invite>>) => {
+          this.inviteSub.next(inviteDocSnap.payload.data());
+        }, (error) => {
+          this.inviteSub.next(undefined);
+        });
+    }
   }
   setupGuest(user: firebase.User) {
     if (user) { // login
@@ -145,6 +153,53 @@ export class UtilService {
   isHost(): boolean {
     return this.guest && (this.guest.role === 'HOST' || this.guest.role === 'COLLAB');
   }
+  private sampleInvite() {
+    this.invite = {
+      title: 'Demo Invite'
+      , shortMsg: 'You are invited'
+      , hostName: 'Abigail and Johnny'
+      , timeFrom: moment(new Date()).add(1, 'months').local()
+      , timeTo: moment(new Date()).add(1, 'months').add(2, 'hours').local()
+      , tz: moment.tz.guess()
+      , longMsg: 'Please join us in celebration of **demo**\'s 16th birthday. RSVP by '
+        + moment(new Date()).add(2, 'weeks').local().format('dddd, MMMM Do YYYY, h:mm:ss a')
+      , addrName: 'Cosme'
+      , addrText: '35 E 21st St, New York, NY 10010'
+      , addrUrl: 'https://www.google.com/search?q=35+E+21st+St%2C+New+York%2C+NY+10010&oq=35+E+21st+St%2C+New+York%2C+NY+10010'
+      , addrDetails: 'valet parking available'
+      , defaultYes: false
+      , showGuests: true
+      , autoApproveNewRsvp: true
+      , visibleByLink: true
+      , photos: [{
+        url: 'https://images.pexels.com/photos/1702373/pexels-photo-1702373.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+        , description: '3 layer cake'
+        , tags: ['cake', 'food', 'slider']
+        , title: 'Birthday cake'
+      }, {
+        url: 'https://images.pexels.com/photos/1105325/bbq-meet-eating-diner-1105325.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'
+        , description: 'Barbeque grill'
+        , tags: ['meat', 'cook', 'bbq', 'slider']
+        , title: 'Barbeque'
+      }]
+    };
+    this.inviteSub.next(this.invite);
+  }
+  private sampleGuest() {
+    this.guest = {
+      name: 'Demo Person'
+      , email: 'demo.email.for.nivite@gmail.com'
+      , role: 'VIEW'
+      , rsvp: 'Y'
+      , adultCount: 2
+      , kidCount: 2
+      , longMsg: 'Even thought I\'m _invisible_, I\'ll **definitely** be there'
+      , shortMsg: 'Happy Birthday Demo'
+      , hostApproved: true
+      , notifyUpdates: true
+    };
+    this.guestSub.next(this.guest);
+  }
   private listenGuest() {
     this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).snapshotChanges()
       .subscribe((guestDocSnap: Action<DocumentSnapshot<Guest>>) => {
@@ -187,71 +242,4 @@ export class UtilService {
   private ifNumberMoment(input: moment_.Moment | number): moment_.Moment {
     return (typeof input === 'number') ? moment(input) : input;
   }
-
-  /* private fetchGuest() {
-    if (!this.guestFid) {
-      this.customerFirestore.collection('nivites/' + this.inviteId + '/guests').get()
-        .subscribe((qSnap: firebase.firestore.QuerySnapshot) => {
-          if (!qSnap.size) {
-            this.clog.log('guest collection empty');
-            this.addNewGuest();
-          } else {
-            this.setupGuest();
-          }
-        });
-    } else {
-      this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestFid).snapshotChanges().
-        pipe(map((guestDocSnap: Action<DocumentSnapshot<Guest>>) => {
-          this.guest = guestDocSnap.payload.data();
-          this.guestFid = guestDocSnap.payload.id;
-          if (!this.guest || this.user.email !== this.guest.email) {
-            this.setupGuest();
-          } else if (this.guest && Object.keys(this.guest).length === 0) {
-            this.clog.log('Guest was empty/invalid, initializing.');
-            this.customerFirestore.collection('nivites/' + this.inviteId + '/guests').doc(this.guestFid)
-              .set(this.newGuest(), { merge: true }).then(() => {
-                this.redirect('guestfid', this.guestFid);
-              }).catch((error) => {
-                this.clog.log(error);
-              });
-          }
-          return guestDocSnap;
-        })).subscribe((guestDocSnap: Action<DocumentSnapshot<Guest>>) => {
-          this.guestSub.next(guestDocSnap.payload.data());
-        }, (error) => {
-          this.clog.log(error);
-        });
-    }
-  }
-
-  private setupGuest() {
-    this.customerFirestore.collection('nivites/' + this.inviteId + '/guests', ref => ref.where('email', '==', this.user.email))
-      .snapshotChanges().subscribe((guestDocChgAc: DocumentChangeAction<Guest>[]) => {
-        if (guestDocChgAc.length > 0) { // found by email address
-          this.clog.log('Not your invite, redirecting to yours: ' + guestDocChgAc[0].payload.doc.id);
-          this.guestFid = guestDocChgAc[0].payload.doc.id;
-          this.redirect('guestfid', guestDocChgAc[0].payload.doc.id);
-        } else { // create a new one
-          this.clog.log('Not your invite, creating a new one');
-          this.addNewGuest();
-        }
-      }, (error) => {
-        // TODO: Alert User that search by email address failed.
-        this.clog.log(error);
-      });
-  }
-  private redirect(paramName: string, paramValue: string) {
-    if (paramValue == null) {
-      paramValue = '';
-    }
-    let url = window.location.href;
-    const pattern = new RegExp('\\b(' + paramName + '=).*?(&|#|$)');
-    if (url.search(pattern) >= 0) {
-      return url.replace(pattern, '$1' + paramValue + '$2');
-    }
-    url = url.replace(/[?#]$/, '');
-    url = url + (url.indexOf('?') > 0 ? '&' : '?') + paramName + '=' + paramValue;
-    window.location.href = url;
-  }
-   */
 }
