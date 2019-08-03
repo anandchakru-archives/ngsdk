@@ -2,7 +2,7 @@ import { Component, OnInit, Output, EventEmitter, OnDestroy, Input, Renderer2 } 
 import { UtilService } from './services/util.service';
 import { takeUntil, take, map } from 'rxjs/operators';
 import { Subject } from 'rxjs';
-import { Invite, Guest } from './util/nivite3-model';
+import { Invite, Guest, Growl } from './util/nivite3-model';
 import { Title } from '@angular/platform-browser';
 import { ClogService } from './services/clog.service';
 
@@ -21,7 +21,13 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
     title.setTitle('Nivite - Loading');
     this.util.userSub.pipe(take(1)).subscribe((user: firebase.User) => {  // One time - invitalize firestore config
       this.util.initializeFirestore(this.fireconfig);
-      this.util.setupInvite();
+      if (this.util.customerFirestore) {
+        this.util.setupInvite();
+      } else {
+        this.util.growlSub.next(new Growl('ERROR: Firebase config missing or invalid'
+          , 'Please update environment.ts and environment.prod.ts with valid firebase config.'
+          , 'danger'));
+      }
     });
     this.util.guestSub.pipe(takeUntil(this.uns)).subscribe((guest: Guest) => { // On everytime guest is loaded
       this.guest.emit(guest);
