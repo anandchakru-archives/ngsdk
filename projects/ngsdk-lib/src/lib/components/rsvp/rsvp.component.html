@@ -42,7 +42,9 @@
             <label for="niviteRsvpModalFormLongMsg">Message</label>
             <textarea type="number" class="form-control" id="niviteRsvpModalFormLongMsg" formControlName="longMsg"
               aria-describedby="Optional message to the host" rows="3"></textarea>
-            <small class="form-text text-muted">Optional message to the host</small>
+            <small class="form-text text-muted">Optional message to the host. Markdown enabled. <a
+                href="https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet" target="_blank"
+                rel="noopener noreferrer">help</a></small>
           </div>
           <div class="btn-group d-flex">
             <button type="button" class="btn btn-success" (click)="saveRsvp('Y')" [disabled]="savingrsvp">

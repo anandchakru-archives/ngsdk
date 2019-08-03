@@ -77,8 +77,8 @@ export class UtilService {
     if (!this.inviteId) {
       this.sampleInvite();
       this.sampleGuest();
-      this.growlSub.next(new Growl('WARN: No invite id in url'
-        , 'unable to find ?iid=someinviteid in url. Loading sample data - preview mode.'
+      this.growlSub.next(new Growl('WARN: Preview mode'
+        , 'Prevew mode - using sample data. Pass ?iid=someinviteid in url to load some real invite.'
         , 'warning', () => { }, 60 * 1000, true));
     } else {
       this.customerFirestore.doc<Invite>('nivites/' + this.inviteId).snapshotChanges()
@@ -114,14 +114,18 @@ export class UtilService {
     }
   }
   saveRsvp(guest: Guest, cb: () => void) {
-    this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).update(guest)
-      .then(() => {
-        this.showModalSub.next({ id: 'rsvp', show: false });
-        this.growlSub.next(new Growl('SUCCESS: Saved your response', `Your response ${guest.rsvp} is saved`
-          , 'success', () => { }, 60 * 1000, true));
-      }).catch((error) => {
-        this.clog.log(error);
-      }).finally(cb);
+    if (!this.customerFirestore) {
+      cb();
+    } else {
+      this.customerFirestore.doc<Guest>('nivites/' + this.inviteId + '/guests/' + this.guestId).update(guest)
+        .then(() => {
+          this.showModalSub.next({ id: 'rsvp', show: false });
+          this.growlSub.next(new Growl('SUCCESS: Saved your response', `Your response ${guest.rsvp} is saved`
+            , 'success', () => { }, 60 * 1000, true));
+        }).catch((error) => {
+          this.clog.log(error);
+        }).finally(() => cb());
+    }
   }
   check(): Observable<firebase.User> {
     return this.userSub.asObservable();
