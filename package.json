@@ -1,6 +1,6 @@
 {
   "name": "@nivite/ngsdk",
-  "version": "1.0.26",
+  "version": "1.0.27",
   "description": "Angular Library to create online invitations the nerdy way.",
   "keywords": [
     "invite",
