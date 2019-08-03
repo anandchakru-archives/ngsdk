@@ -21,11 +21,10 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
     title.setTitle('Nivite - Loading');
     this.util.userSub.pipe(take(1)).subscribe((user: firebase.User) => {  // One time - invitalize firestore config
       this.util.initializeFirestore(this.fireconfig);
-      if (this.util.customerFirestore) {
-        this.util.setupInvite();
-      } else {
+      if (!this.util.customerFirestore) {
         this.missingFirebaseConfig();
       }
+      this.util.setupInvite();
     });
     this.util.guestSub.pipe(takeUntil(this.uns)).subscribe((guest: Guest) => { // On everytime guest is loaded
       this.guest.emit(guest);
@@ -35,12 +34,8 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
       title.setTitle('Nivite - ' + (invite ? invite.hostName : ' Oops!'));
     });
     this.util.userSub.pipe(takeUntil(this.uns)).subscribe((user: firebase.User) => {  // On every login/logout
-      if (this.util.customerFirestore) {
-        this.util.setupGuest(user);
-        this.login.emit(user);
-      } else {
-        this.missingFirebaseConfig();
-      }
+      this.util.setupGuest(user);
+      this.login.emit(user);
     });
   }
 
