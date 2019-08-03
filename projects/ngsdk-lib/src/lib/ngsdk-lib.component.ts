@@ -47,6 +47,8 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
   private missingFirebaseConfig() {
     this.util.growlSub.next(new Growl('ERROR: Firebase config missing or invalid'
       , 'Please update environment.ts and environment.prod.ts with valid firebase config.', 'danger'));
+    this.util.sampleInvite();
+    this.util.sampleGuest();
   }
 
   ngOnInit() {

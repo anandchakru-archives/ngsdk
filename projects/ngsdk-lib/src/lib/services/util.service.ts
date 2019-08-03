@@ -152,7 +152,7 @@ export class UtilService {
   isHost(): boolean {
     return this.guest && (this.guest.role === 'HOST' || this.guest.role === 'COLLAB');
   }
-  private sampleInvite() {
+  sampleInvite() {
     this.invite = {
       title: 'Demo Invite'
       , shortMsg: 'You are invited'
@@ -184,7 +184,7 @@ export class UtilService {
     };
     this.inviteSub.next(this.invite);
   }
-  private sampleGuest() {
+  sampleGuest() {
     this.guest = {
       name: 'Demo Person'
       , email: 'demo.email.for.nivite@gmail.com'
