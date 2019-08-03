@@ -77,8 +77,8 @@ export class UtilService {
     if (!this.inviteId) {
       this.sampleInvite();
       this.sampleGuest();
-      this.growlSub.next(new Growl('WARN: No iid in url'
-        , 'unable to find the invite id (iid) in url. Loading sample data - this is not a real invite.'
+      this.growlSub.next(new Growl('WARN: No invite id in url'
+        , 'unable to find ?iid=someinviteid in url. Loading sample data - preview mode.'
         , 'warning', () => { }, 60 * 1000, true));
     } else {
       this.customerFirestore.doc<Invite>('nivites/' + this.inviteId).snapshotChanges()
@@ -141,12 +141,12 @@ export class UtilService {
     this.collapsed = true;
   }
   showModal(id: 'rsvp' | 'atc') {
-    if (this.user) {
-      this.showModalSub.next({ id, show: true });
-    } else if (id === 'rsvp') {
+    if (!this.user && id === 'rsvp') {
       this.google(() => {
         this.showModalSub.next({ id, show: true });
       });
+    } else {
+      this.showModalSub.next({ id, show: true });
     }
   }
   isHost(): boolean {

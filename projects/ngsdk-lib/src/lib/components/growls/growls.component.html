@@ -6,7 +6,7 @@
       <button type="button" class="close mx-1 p-1 text-muted" (click)="close(growl.key)">
         <span aria-hidden="true">&times;</span>
       </button>
-      <div class="p-1 text-dark font-weight-bold">{{growl.value.title}} </div>
+      <div class="p-1 text-dark font-weight-bold mr-4">{{growl.value.title}} </div>
       <div class="px-1 small text-dark" *ngIf="growl.value.body">{{growl.value.body}}</div>
       <div class="my-2 progress" *ngIf="growl.value.percent">
         <div class="progress-bar bg-{{growl.value.type}}" [style.width.%]="growl.value.percent"></div>
