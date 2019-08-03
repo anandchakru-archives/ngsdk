@@ -141,7 +141,7 @@ export class UtilService {
     this.collapsed = true;
   }
   showModal(id: 'rsvp' | 'atc') {
-    if (!this.user && id === 'rsvp') {
+    if (!this.user && id === 'rsvp' && this.inviteId) { // check this.inviteId - don't show google login in sample mode
       this.google(() => {
         this.showModalSub.next({ id, show: true });
       });
