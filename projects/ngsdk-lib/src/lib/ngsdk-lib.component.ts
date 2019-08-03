@@ -24,9 +24,7 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
       if (this.util.customerFirestore) {
         this.util.setupInvite();
       } else {
-        this.util.growlSub.next(new Growl('ERROR: Firebase config missing or invalid'
-          , 'Please update environment.ts and environment.prod.ts with valid firebase config.'
-          , 'danger'));
+        this.missingFirebaseConfig();
       }
     });
     this.util.guestSub.pipe(takeUntil(this.uns)).subscribe((guest: Guest) => { // On everytime guest is loaded
@@ -37,9 +35,18 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
       title.setTitle('Nivite - ' + (invite ? invite.hostName : ' Oops!'));
     });
     this.util.userSub.pipe(takeUntil(this.uns)).subscribe((user: firebase.User) => {  // On every login/logout
-      this.util.setupGuest(user);
-      this.login.emit(user);
+      if (this.util.customerFirestore) {
+        this.util.setupGuest(user);
+        this.login.emit(user);
+      } else {
+        this.missingFirebaseConfig();
+      }
     });
+  }
+
+  private missingFirebaseConfig() {
+    this.util.growlSub.next(new Growl('ERROR: Firebase config missing or invalid'
+      , 'Please update environment.ts and environment.prod.ts with valid firebase config.', 'danger'));
   }
 
   ngOnInit() {
