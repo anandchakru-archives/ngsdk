@@ -50,6 +50,7 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    // If you are changing the margin values - dont forget .growls {top: 70px;}
     this.renderer.setStyle(document.body, 'margin-top', '60px');
     this.renderer.setStyle(document.body, 'margin-bottom', '60px');
   }
