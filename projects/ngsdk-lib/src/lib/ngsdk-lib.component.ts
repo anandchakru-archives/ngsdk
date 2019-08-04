@@ -39,7 +39,7 @@ export class NgsdkLibComponent implements OnInit, OnDestroy {
         this.util.setupGuest(user);
         this.login.emit(user);
       } else {
-        this.missingFirebaseConfig();
+        // this.missingFirebaseConfig();
       }
     });
   }

@@ -4,14 +4,5 @@
   "lib": {
     "entryFile": "src/public-api.ts"
   },
-  "whitelistedNonPeerDependencies": [
-    "@angular/fire",
-    "angularfire2",
-    "bootstrap",
-    "file-saver",
-    "firebase",
-    "moment",
-    "moment-timezone",
-    "ngx-markdown"
-  ]
+  "whitelistedNonPeerDependencies": []
 }

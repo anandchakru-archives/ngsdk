@@ -2,9 +2,9 @@
 /* tslint:disable */
 export const BUILDINFO = {
   "hash": {
-    "short": "4cd8186",
-    "long": "4cd81865d580f5fd41a9e0569c4f8a7eee65f02a"
+    "short": "705f2e6",
+    "long": "705f2e60eb48bf166a4cca2ddd6df33b78880c6c"
   },
-  "tag": "v1.0.26"
+  "tag": "v1.0.27"
 };
 /* tslint:enable */

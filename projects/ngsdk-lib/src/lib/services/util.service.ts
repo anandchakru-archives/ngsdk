@@ -68,10 +68,12 @@ export class UtilService {
     this.clog.visible = url.get('log') ? true : false;         // log - initialize custom console
   }
   initializeFirestore(hostFirestoreWebConfig: any/* gapi.client.firebase.WebAppConfig */) {
-    this.customerFirestore = new AngularFirestore(
-      hostFirestoreWebConfig, hostFirestoreWebConfig.appId, false, null, PLATFORM_ID, this.ngZone, null);
-    this.customerFireStorage = new AngularFireStorage(
-      hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone);
+    if (hostFirestoreWebConfig && hostFirestoreWebConfig.appId) {
+      this.customerFirestore = new AngularFirestore(
+        hostFirestoreWebConfig, hostFirestoreWebConfig.appId, false, null, PLATFORM_ID, this.ngZone, null);
+      this.customerFireStorage = new AngularFireStorage(
+        hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone);
+    }
   }
   setupInvite() {
     if (!this.inviteId) {
