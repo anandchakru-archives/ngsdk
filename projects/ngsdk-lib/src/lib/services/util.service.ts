@@ -67,22 +67,36 @@ export class UtilService {
     this.inviteId = url.get('iid');       // invite id
     this.clog.visible = url.get('log') ? true : false;         // log - initialize custom console
   }
-  initializeFirestore(hostFirestoreWebConfig: any/* gapi.client.firebase.WebAppConfig */) {
+  initializeFirestoreAndSetupInvite(hostFirestoreWebConfig: any/* gapi.client.firebase.WebAppConfig */) {
     if (hostFirestoreWebConfig && hostFirestoreWebConfig.appId) {
       this.customerFirestore = new AngularFirestore(
         hostFirestoreWebConfig, hostFirestoreWebConfig.appId, false, null, PLATFORM_ID, this.ngZone, null);
       this.customerFireStorage = new AngularFireStorage(
         hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone);
     }
-  }
-  setupInvite() {
-    if (!this.inviteId) {
+    if (this.customerFirestore) {
+      if (this.inviteId) {
+        this.setupInvite();
+      } else {
+        this.growlSub.next(new Growl('WARN: Preview mode'
+          , 'Missing iid in url.', 'warning'));
+        this.sampleInvite();
+        this.sampleGuest();
+      }
+    } else {
+      if (this.inviteId) {
+        this.growlSub.next(new Growl('WARN: Preview mode'
+          , 'Invalid firebase config in environment(.prod).ts', 'warning'));
+      } else {
+        this.growlSub.next(new Growl('WARN: Preview mode'
+          , 'Invalid firebase config in environment(.prod).ts and Missing iid in url.', 'warning'));
+      }
       this.sampleInvite();
       this.sampleGuest();
-      this.growlSub.next(new Growl('WARN: Preview mode'
-        , 'Prevew mode - using sample data. Pass ?iid=someinviteid in url to load some real invite.'
-        , 'warning', () => { }, 60 * 1000, true));
-    } else {
+    }
+  }
+  setupInvite() {
+    if (this.inviteId && this.customerFirestore) {
       this.customerFirestore.doc<Invite>('nivites/' + this.inviteId).snapshotChanges()
         .pipe(map((inviteDocSnap: Action<DocumentSnapshot<Invite>>) => {
           this.invite = inviteDocSnap.payload.data();
@@ -93,26 +107,33 @@ export class UtilService {
         })).subscribe((inviteDocSnap: Action<DocumentSnapshot<Invite>>) => {
           this.inviteSub.next(inviteDocSnap.payload.data());
         }, (error) => {
+          this.growlSub.next(new Growl('ERROR: Invalid invite'
+            , 'Could not load invite with iid=' + this.inviteId + '. Invalid iid?', 'danger'));
           this.inviteSub.next(undefined);
         });
     }
   }
   setupGuest(user: firebase.User) {
-    if (user) { // login
-      this.customerFirestore.collection('nivites/' + this.inviteId + '/guests', ref => ref.where('email', '==', this.user.email))
-        .get().subscribe((guestDocChgAc: QuerySnapshot<Guest>) => {
-          this.clog.log(`Find by email: ${this.user.email}, size: ${guestDocChgAc.size}`);
-          if (guestDocChgAc.size > 0) { // found by email
-            this.guestId = guestDocChgAc.docs[0].id;
-            this.listenGuest();
-          } else {
-            this.clog.log('Adding new.');
-            this.addNewGuest();
-          }
-        });
-    } else { // logout
-      this.guest = undefined;
-      this.guestSub.next(this.guest);
+    if (this.inviteId && this.customerFirestore) {
+      if (user) { // login
+        this.customerFirestore.collection('nivites/' + this.inviteId + '/guests', ref => ref.where('email', '==', this.user.email))
+          .get().subscribe((guestDocChgAc: QuerySnapshot<Guest>) => {
+            this.clog.log(`Find by email: ${this.user.email}, size: ${guestDocChgAc.size}`);
+            if (guestDocChgAc.size > 0) { // found by email
+              this.guestId = guestDocChgAc.docs[0].id;
+              this.listenGuest();
+            } else {
+              this.clog.log('Adding new.');
+              this.addNewGuest();
+            }
+          }, (error) => {
+            this.growlSub.next(new Growl('ERROR: Preview mode'
+              , 'Could not load invite with iid=' + this.inviteId + '. Invalid iid?', 'danger'));
+          });
+      } else { // logout
+        this.guest = undefined;
+        this.guestSub.next(this.guest);
+      }
     }
   }
   saveRsvp(guest: Guest, cb: () => void) {
