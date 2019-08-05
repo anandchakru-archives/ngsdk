@@ -54,14 +54,14 @@ export class RsvpComponent implements OnInit, OnDestroy {
   }
   saveRsvp(rsvp: 'Y' | 'N' | 'M') {
     this.savingrsvp = true;
-    if (!this.guest) {
-      this.guest = this.util.makeNewGuest();
-    }
-    this.guest.rsvp = rsvp;
-    this.guest.adultCount = this.fg.get('ac').value;
-    this.guest.kidCount = this.fg.get('kc').value;
-    this.guest.longMsg = this.fg.get('longMsg').value;
-    this.util.saveRsvp(this.guest, () => {
+    const newGuest: Guest = {};
+    newGuest.rsvp = rsvp;
+    newGuest.adultCount = this.fg.get('ac').value;
+    newGuest.kidCount = this.fg.get('kc').value;
+    newGuest.longMsg = this.fg.get('longMsg').value;
+    newGuest.shortMsg = '';
+    newGuest.notifyUpdates = true;
+    this.util.saveRsvp(newGuest, () => {
       this.savingrsvp = false;
     });
   }
