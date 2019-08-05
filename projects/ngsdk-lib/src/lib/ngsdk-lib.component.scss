@@ -48,3 +48,90 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+/*S:ATC*/
+.bg-nivite {
+  background-color: #ba3d16;
+}
+
+.bg-apple {
+  background-color: #a3aaae;
+}
+
+.bg-google {
+  background-color: #4285F4;
+}
+
+.bg-microsoft {
+  background-color: #00a4ef;
+}
+
+.bg-yahoo {
+  background-color: #410093;
+}
+
+/*E:ATC*/
+
+/*S:CLOG*/
+.lh-1 {
+  line-height: 1;
+}
+
+.hoverhigh {
+  opacity: 0.8;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.clog {
+  bottom: 50px;
+  top: 55px;
+
+  pre {
+    overflow-y: hidden;
+  }
+}
+
+/*E:CLOG*/
+
+/*S:GROWLS*/
+.growls {
+  position: absolute;
+  top: 70px;
+  right: 10px;
+  margin-left: 10px;
+  overflow: auto;
+  word-wrap: break-word; // urls overflowing without this
+}
+
+.progress {
+  height: 2px;
+  margin-top: 5px;
+
+  .progress-bar {
+    transition: width linear 750ms;
+  }
+}
+
+.alert {
+  position: relative;
+  opacity: 0.95;
+  right: 0;
+  left: 0;
+  z-index: 1031;
+}
+
+/*E:GROWLS*/
+
+/*S:NAV*/
+.slidedown {
+  @include animation('slidedown 1s 1');
+}
+
+.slideup {
+  @include animation('slideup 1s 1');
+}
+
+/*E:NAV*/

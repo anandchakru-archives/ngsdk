@@ -47,7 +47,7 @@ export class UtilService {
   };
   niviteFireAuth: AngularFireAuth;
   customerFirestore: AngularFirestore;
-  customerFireStorage: AngularFireStorage;
+  // customerFireStorage: AngularFireStorage;
 
   constructor(private http: HttpClient, private ngZone: NgZone, private clog: ClogService) {
     this.niviteFireAuth = new AngularFireAuth(this.niviteFirebaseWebConfig, this.niviteFirebaseWebConfig.appId, PLATFORM_ID, this.ngZone);
@@ -71,8 +71,8 @@ export class UtilService {
     if (hostFirestoreWebConfig && hostFirestoreWebConfig.appId) {
       this.customerFirestore = new AngularFirestore(
         hostFirestoreWebConfig, hostFirestoreWebConfig.appId, false, null, PLATFORM_ID, this.ngZone, null);
-      this.customerFireStorage = new AngularFireStorage(
-        hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone);
+      /* this.customerFireStorage = new AngularFireStorage(
+        hostFirestoreWebConfig, hostFirestoreWebConfig.appId, hostFirestoreWebConfig.storageBucket, PLATFORM_ID, this.ngZone); */
     }
     if (this.customerFirestore) {
       if (this.inviteId) {
